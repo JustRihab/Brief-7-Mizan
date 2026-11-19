@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Brief-7-Mizan</title>
+  </head>
+  <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col font-sans">
+    <div class="flex min-h-screen">
+      <aside class="bg-[#172A46] text-white w-60 min-h-screen p-5 shadow-xl">
+        <div class="flex items-center gap-2 mb-10">
+          <img src="icons/jewelry.png" class="w-12 h-12" alt="Logo AL Andalous">
+          <p class="text-xl font-bold text-[#D99A16]">Al Andalous</p>
+        </div>
+        <nav class="flex flex-col gap-3">
+          <a href="#articles" class="p-3 rounded-xl bg-[#D99A16] text-[#172A46] font-semibold">Nos articles</a>
+          <button type="button" data-action="ouvrir-formulaire" class="p-3 rounded-xl text-left hover:bg-[#344967]">+ Ajouter un article</button>
+          <a href="#reservations" class="p-3 rounded-xl hover:bg-[#344967]">Réservations</a>
+        </nav>
+        <div class="mt-8">
+            <p class="text-gray-400 text-sm mb-3">Préférences</p>
+            <select id="devise" class="w-full p-2 rounded-lg text-gray-800">
+              <option value="MAD">MAD</option>
+              <option value="EUR">EUR</option>
+            </select>
+            <button type="button" id="changer-theme" class="mt-3 p-2 rounded-lg hover:bg-[#344967]">Changer le thème</button>
+          </div>
+      </aside>
+        <main class="flex-1 min-w-0 p-6">
+          <header class="flex flex-col gap-4 mb-8">
+                <p id="message-offline" class="hidden bg-yellow-100 text-yellow-800 p-3 rounded-lg">Vous êtes hors ligne. Les données enregistrées sont affichées.</p>
+                <div class="flex items-center justify-between">
+                    <div>
+                      <h1 class="text-2xl font-bold text-[#172A46]">Catalogue des articles</h1>
+                      <p class="text-gray-500 text-sm mt-1">Gérez les articles de votre bijouterie</p>
+                    </div>
+                    <button type="button" id="actualiser-articles" class="bg-[#172A46] text-white px-4 py-2 rounded-lg">Actualiser</button>
+                </div>
+            </header>
+            <section class="mb-8">
+                <h2 class="text-2xl font-bold text-[#172A46]">Bienvenue dans votre espace de gestion</h2>
+                <p class="text-gray-500 mt-2">Gérez facilement les articles de votre bijouterie Al Andalous.</p>
+            </section>
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                <div class="bg-white p-5 rounded-xl shadow-sm">
+                    <p class="text-gray-500 text-sm">Total des articles</p>
+                    <h3 class="text-3xl font-bold text-[#172A46] mt-2">--</h3>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm">
+                    <p class="text-gray-500 text-sm">Articles disponibles</p>
+                    <h3 class="text-3xl font-bold text-green-700 mt-2">--</h3>
+                </div>
+                <div class="bg-white p-5 rounded-xl shadow-sm">
+                    <p class="text-gray-500 text-sm">Articles réservés</p>
+                    <h3 class="text-3xl font-bold text-[#D99A16] mt-2">0</h3>
+                </div>
+            </section>
+            <section id="articles" class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-[#172A46]">Catalogue des articles</h2>
+                        <p class="text-gray-500 text-sm mt-1">Consultez et gérez vos articles</p>
+                    </div>
+                    <button id="ouvrir-formulaire" data-action="ouvrir-formulaire" class="bg-[#D99A16] text-[#172A46] font-semibold px-4 py-2 rounded-lg hover:bg-[#c58b12]">+ Ajouter un article</button>
+                </div>
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <input type="search" id="recherche-article" placeholder="Rechercher un article..." class="border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-[#D99A16]">
+                    <select id="filtre-categorie" class="border border-gray-300 rounded-lg px-4 py-2 outline-none">
+                        <option value="">Toutes les catégories</option>
+                        <option value="bagues">Bagues</option>
+                        <option value="colliers">Colliers</option>
+                        <option value="bracelets">Bracelets</option>
+                        <option value="boucles">Boucles d'oreilles</option>
+                    </select>
+                    <select id="tri-articles" class="border border-gray-300 rounded-lg px-4 py-2 outline-none">
+                        <option value="">Trier par</option>
+                        <option value="nom">Nom</option>
+                        <option value="prix">Prix</option>
+                    </select>
+                 </div>
+                 <p id="chargement-articles" class="text-blue-600 text-sm hidden">Chargement des articles...</p>
+                 <p id="erreur-articles" class="text-red-600 text-sm hidden" role="alert"></p>
+                 <button type="button" id="reessayer-articles" class="hidden text-blue-600 underline">Réessayer</button>
+                 <p id="message-vide" class="text-gray-500 text-center py-8 hidden">Aucun article trouvé.</p>
+                 <div id="liste-articles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+            </section>
+            <section id="reservations" class="bg-white p-6 rounded-xl shadow-sm mb-8">
+                <div class="mb-6">
+                    <h2 class="text-xl font-bold text-[#172A46]">Réservations</h2>
+                    <p class="text-gray-500 text-sm mt-1">Consultez les réservations des clients</p>
+                </div>
+                <p id="chargement-reservations" class="text-blue-600 text-sm hidden">Chargement des réservations...</p>
+                <p id="erreur-reservations" class="text-red-600 text-sm hidden" role="alert"></p>
+                <button type="button" id="reessayer-reservations" class="hidden text-blue-600 underline">Réessayer</button>
+                <p id="message-reservations-vide" class="text-gray-500 text-center py-8 hidden">Aucune réservation trouvée.</p>
+                <div id="liste-reservations" class="overflow-x-auto"></div>
+            </section>
+            <section id="formulaire-article" class="hidden bg-white p-6 rounded-xl shadow mb-6">
+                <h2 class="text-xl font-bold mb-4">Ajouter un article</h2>
+                <form id="form-article" class="flex flex-col gap-4">
+                    <div>
+                        <label for="nom-article">Nom de l'article</label>
+                        <input type="text" id="nom-article" class="w-full border rounded-lg p-2" required>
+                    </div>
+                    <div>
+                        <label for="prix-article">Prix</label>
+                        <input type="number" id="prix-article" class="w-full border rounded-lg p-2" required>
+                    </div>
+                    <div>
+                        <label for="categorie-article">Catégorie</label>
+                        <select id="categorie-article" class="w-full border rounded-lg p-2" required>
+                            <option value="">Choisir une catégorie</option>
+                    </select>
+                </div>
+                <p id="erreur-formulaire" class="text-red-600 hidden"></p>
+                <div class="flex gap-3">
+                    <button type="submit" class="bg-[#D99A16] px-4 py-2 rounded-lg">Enregistrer</button>
+                    <button type="button" id="annuler-formulaire" class="bg-gray-200 px-4 py-2 rounded-lg">Annuler</button>
+                </div>
+            </form>
+            </section>
+            <section id="confirmation-suppression" class="hidden bg-white p-6 rounded-xl shadow mb-6">
+                <h2 class="text-xl font-bold mb-3">Confirmer la suppression</h2>
+                <p class="mb-4">Voulez-vous vraiment supprimer cet article ?</p>
+                <button type="button" id="confirmer-suppression" class="bg-red-600 text-white px-4 py-2 rounded-lg">Supprimer</button>
+                <button type="button" id="annuler-suppression" class="bg-gray-200 px-4 py-2 rounded-lg">Annuler</button>
+            </section>
+        </main>
+        <script type="module" src="src/main2.js"></script>
+    </div>
+  </body>
+</html>

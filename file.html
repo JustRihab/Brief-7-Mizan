@@ -7,28 +7,30 @@
     <title>Brief-7-Mizan</title>
   </head>
   <body class="bg-gray-100 text-gray-800 min-h-screen flex flex-col font-sans">
-    <div class="flex min-h-screen">
-      <aside class="bg-[#172A46] text-white w-60 min-h-screen p-5 shadow-xl">
-        <div class="flex items-center gap-2 mb-10">
-          <img src="icons/jewelry.png" class="w-12 h-12" alt="Logo AL Andalous">
-          <p class="text-xl font-bold text-[#D99A16]">Al Andalous</p>
-        </div>
-        <nav class="flex flex-col gap-3">
-          <a href="#articles" class="p-3 rounded-xl bg-[#D99A16] text-[#172A46] font-semibold">Nos articles</a>
-          <button type="button" data-action="ouvrir-formulaire" class="p-3 rounded-xl text-left hover:bg-[#344967]">+ Ajouter un article</button>
-          <a href="#reservations" class="p-3 rounded-xl hover:bg-[#344967]">Réservations</a>
-        </nav>
-        <div class="mt-8">
-            <p class="text-gray-400 text-sm mb-3">Préférences</p>
-            <select id="devise" class="w-full p-2 rounded-lg text-gray-800">
-              <option value="MAD">MAD</option>
-              <option value="EUR">EUR</option>
-            </select>
-            <button type="button" id="changer-theme" class="mt-3 p-2 rounded-lg hover:bg-[#344967]">Changer le thème</button>
-          </div>
-      </aside>
-        <main class="flex-1 min-w-0 p-6">
-          <header class="flex flex-col gap-4 mb-8">
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <div id="sidebar-overlay" class="hidden fixed inset-0 bg-black/40 z-40 md:hidden"></div>
+        <aside id="sidebar" class="fixed md:sticky top-0 left-0 z-50 w-60 h-screen bg-[#172A46] text-white p-5 shadow-xl transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+            <div class="flex items-center gap-2 mb-10">
+                <img src="icons/jewelry.png" class="w-12 h-12" alt="Logo AL Andalous">
+                <p class="text-xl font-bold text-[#D99A16]">Al Andalous</p>
+            </div>
+            <nav class="flex flex-col gap-3">
+                <a href="#articles" class="p-3 rounded-xl bg-[#D99A16] text-[#172A46] font-semibold">Nos articles</a>
+                <button type="button" data-action="ouvrir-formulaire" class="p-3 rounded-xl text-left hover:bg-[#344967]">Ajouter un article</button>
+                <a href="#reservations" class="p-3 rounded-xl hover:bg-[#344967]">Réservations</a>
+            </nav>
+            <div class="mt-8">
+                <p class="text-gray-400 text-sm mb-3">Préférences</p>
+                <select id="devise" class="w-full p-2 rounded-lg text-gray-800">
+                    <option value="MAD">MAD</option>
+                    <option value="EUR">EUR</option>
+                </select>
+                <button type="button" id="changer-theme" class="mt-3 p-2 rounded-lg hover:bg-[#344967]">Changer le thème</button>
+            </div>
+        </aside>
+        <main class="flex-1 min-w-0 p-6 md:ml-0">
+            <button id="menu-btn" class="md:hidden mb-2 bg-[#D99A16] text-black font-bold text-xl p-2 rounded-xl">Menu ☰</button>
+            <header class="flex flex-col gap-4 mb-8">
                 <p id="message-offline" class="hidden bg-yellow-100 text-yellow-800 p-3 rounded-lg">Vous êtes hors ligne. Les données enregistrées sont affichées.</p>
                 <div class="flex items-center justify-between">
                     <div>

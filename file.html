@@ -37,7 +37,7 @@
                       <h1 class="text-2xl font-bold text-[#172A46]">Catalogue des articles</h1>
                       <p class="text-gray-500 text-sm mt-1">Gérez les articles de votre bijouterie</p>
                     </div>
-                    <button type="button" id="actualiser-articles" class="bg-[#172A46] text-white px-4 py-2 rounded-lg">Actualiser</button>
+                    <button type="button" id="actualiser-articles" class="bg-[#172A46] text-white px-4 py-2 rounded-lg hover:bg-[#2c5696]">Actualiser</button>
                 </div>
             </header>
             <section class="mb-8">
@@ -68,23 +68,22 @@
                 </div>
                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     <input type="search" id="recherche-article" placeholder="Rechercher un article..." class="border border-gray-300 rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-[#D99A16]">
-                    <select id="filtre-categorie" class="border border-gray-300 rounded-lg px-4 py-2 outline-none">
-                        <option value="">Toutes les catégories</option>
-                        <option value="bagues">Bagues</option>
-                        <option value="colliers">Colliers</option>
-                        <option value="bracelets">Bracelets</option>
-                        <option value="boucles">Boucles d'oreilles</option>
+                    <select id="filtre-statut" class="border border-gray-300 rounded-lg px-4 py-2 outline-none">
+                        <option value="">Fitrer par</option>
+                        <option value="disponible">disponible</option>
+                        <option value="réservé">réservé</option>
                     </select>
                     <select id="tri-articles" class="border border-gray-300 rounded-lg px-4 py-2 outline-none">
                         <option value="">Trier par</option>
-                        <option value="nom">Nom</option>
+                        <option value="titre">Titre</option>
                         <option value="prix">Prix</option>
+                        <option value="date">Date</option>
                     </select>
                  </div>
                  <p id="chargement-articles" class="text-blue-600 text-sm hidden">Chargement des articles...</p>
                  <p id="erreur-articles" class="text-red-600 text-sm hidden" role="alert"></p>
                  <button type="button" id="reessayer-articles" class="hidden text-blue-600 underline">Réessayer</button>
-                 <p id="message-vide" class="text-gray-500 text-center py-8 hidden">Aucun article trouvé.</p>
+                 <p id="message-vide" class="text-gray-500 text-center py-8 hidden"></p>
                  <div id="liste-articles" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
             </section>
             <section id="reservations" class="bg-white p-6 rounded-xl shadow-sm mb-8">
@@ -102,34 +101,42 @@
                 <h2 class="text-xl font-bold mb-4">Ajouter un article</h2>
                 <form id="form-article" class="flex flex-col gap-4">
                     <div>
-                        <label for="nom-article">Nom de l'article</label>
-                        <input type="text" id="nom-article" class="w-full border rounded-lg p-2" required>
+                        <label for="titre-article">Titre de l'article</label>
+                        <input type="text" id="titre-article" class="w-full border rounded-lg p-2" required>
                     </div>
                     <div>
                         <label for="prix-article">Prix</label>
                         <input type="number" id="prix-article" class="w-full border rounded-lg p-2" required>
                     </div>
                     <div>
-                        <label for="categorie-article">Catégorie</label>
-                        <select id="categorie-article" class="w-full border rounded-lg p-2" required>
-                            <option value="">Choisir une catégorie</option>
-                    </select>
-                </div>
-                <p id="erreur-formulaire" class="text-red-600 hidden"></p>
-                <div class="flex gap-3">
-                    <button type="submit" class="bg-[#D99A16] px-4 py-2 rounded-lg">Enregistrer</button>
-                    <button type="button" id="annuler-formulaire" class="bg-gray-200 px-4 py-2 rounded-lg">Annuler</button>
-                </div>
-            </form>
-            </section>
-            <section id="confirmation-suppression" class="hidden bg-white p-6 rounded-xl shadow mb-6">
-                <h2 class="text-xl font-bold mb-3">Confirmer la suppression</h2>
-                <p class="mb-4">Voulez-vous vraiment supprimer cet article ?</p>
-                <button type="button" id="confirmer-suppression" class="bg-red-600 text-white px-4 py-2 rounded-lg">Supprimer</button>
-                <button type="button" id="annuler-suppression" class="bg-gray-200 px-4 py-2 rounded-lg">Annuler</button>
-            </section>
+                        <label for="description-article">Description</label>
+                        <textarea id="description-article" class="w-full border rounded-lg p-2"></textarea>
+                    </div>
+                    <p id="erreur-formulaire" class="text-red-600 hidden"></p>
+                    <div class="flex gap-3">
+                        <button type="submit" class="bg-[#D99A16] px-4 py-2 rounded-lg">Enregistrer</button>
+                        <button type="button" id="annuler-formulaire" class="bg-gray-200 px-4 py-2 rounded-lg">Annuler</button>
+                    </div>
+                </form>
+                </section>
+                <section id="confirmation-suppression" class="hidden bg-white p-6 rounded-xl shadow mb-6">
+                    <h2 class="text-xl font-bold mb-3">Confirmer la suppression</h2>
+                    <p class="mb-4">Voulez-vous vraiment supprimer cet article ?</p>
+                    <button type="button" id="confirmer-suppression" class="bg-red-600 text-white px-4 py-2 rounded-lg">Supprimer</button>
+                    <button type="button" id="annuler-suppression" class="bg-gray-200 px-4 py-2 rounded-lg">Annuler</button>
+                </section>
         </main>
-        <script type="module" src="src/main2.js"></script>
     </div>
+    <div id="modal-details" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+            <h2 id="modal-titre" class="text-2xl font-bold text-[#172A46] mb-4"></h2>
+            <p id="modal-prix"></p>
+            <p id="modal-statut"></p>
+            <p id="modal-date"></p>
+            <p id="modal-description"></p>
+            <button id="fermer-modal" class="mt-5 bg-[#172A46] text-white px-5 py-2 rounded-lg">Fermer</button>
+        </div>
+    </div>
+    <script type="module" src="src/main2.js"></script>
   </body>
 </html>
